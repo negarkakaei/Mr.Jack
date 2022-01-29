@@ -89,6 +89,7 @@ void save_logical_map(){
         next_round= next_round->next;
     }
     fclose(fp);
+    printf2(12, "\n %s\n", "your game is saved successfully.");
 }
 
 // در صورتی که کاربر تصمیم بگیرد بازی قبلی را ادامه دهد این تابع مپ گرافیکی ان را لود می کند
