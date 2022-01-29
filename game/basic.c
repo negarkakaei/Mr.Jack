@@ -89,7 +89,8 @@ void save_logical_map(){
         next_round= next_round->next;
     }
     fclose(fp);
-    printf2(12, "\n %s\n", "your game is saved successfully.");
+    printf2(10, "\n %s\n", "your game is saved successfully.");
+    sleep(3);
 }
 
 // در صورتی که کاربر تصمیم بگیرد بازی قبلی را ادامه دهد این تابع مپ گرافیکی ان را لود می کند
@@ -170,9 +171,6 @@ void menu(enum condition input, bool exit_option){
         printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n  4)creat personal map\n");
         scanf("%d", &choice);
         system("cls");
-        if (choice==4){
-            creat_personal_map();
-        }
         while (choice==3) {
             FILE *fp = fopen("rules.txt", "r");
             char str[500];
@@ -185,7 +183,7 @@ void menu(enum condition input, bool exit_option){
             system("cls");
             fclose(fp);
             printf("\n main menu:\n");
-            printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n");
+            printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n  4)creat personal map\n");
             scanf("%d", &choice);
             system("cls");
         }
@@ -202,9 +200,14 @@ void menu(enum condition input, bool exit_option){
                 print_map();
             }
         }
-        if (choice==1){
+        if (choice==1 || choice == 4){
+            if (choice == 4) {
+                creat_personal_map();
+            }
+            else {
+                fill_logical_map();
+            }
             creat_map();
-            fill_logical_map();
             fill_graphic_map();
             save_graphic_map();
             print_map();

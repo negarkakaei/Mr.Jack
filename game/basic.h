@@ -20,6 +20,8 @@ SetConsoleTextAttribute(hConsole, 07);
 #include <conio.h>
 #include "map.h"
 #include <windows.h>
+#include <winuser.h>
+
 extern int round_cnt, turn;
 extern int player, lantern_direction;
 extern char **alibi, detective_cards[7][3], jack_cards[7][3];

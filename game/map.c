@@ -50,7 +50,7 @@ void creat_map() {
 // این تابع مپ منطقی اولیه بازی که شامل اطلاعات هر خانه است را تشکیل می دهد
 void fill_logical_map() {
     FILE *fp = fopen("map_info.txt", "r");
-    int al = 1, il = 1, e = 1, b = 1, m = 1, mc = 1;
+    int al = 1, il = 1, m = 1, mc = 1;
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 13; j++) {
             fscanf(fp, "%d", &logical_map[i][j].type);
@@ -91,6 +91,13 @@ void fill_graphic_map() {
     num[1] = '\0';
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 13; j++) {
+            if (logical_map[i][j].character!=0){
+                if (j % 2 == 0) {
+                    strncpy(&graphic_map[4 * i + 3][8 * j + 6], ToString(logical_map[i][j].character), 2);
+                } else {
+                    strncpy(&graphic_map[4 * i + 1][(j / 2) * 16 + 14], ToString(logical_map[i][j].character), 2);
+                }
+            }
             if (logical_map[i][j].type == house) {
                 strcpy(symbol, "#");
             } else if (logical_map[i][j].type == extra) {
@@ -113,6 +120,14 @@ void fill_graphic_map() {
                 num[0] = logical_map[i][j].num + 48;
                 strcat(symbol, num);
                 strcat(symbol, ")");
+            } else if (logical_map[i][j].type == exit_on){
+                strcpy(symbol, "E");
+                num[0] = logical_map[i][j].num + 48;
+                strcat(symbol, num);
+            } else if (logical_map[i][j].type == exit_off){
+                strcpy(symbol, "B");
+                num[0] = logical_map[i][j].num + 48;
+                strcat(symbol, num);
             } else {
                 continue;
             }
@@ -123,28 +138,16 @@ void fill_graphic_map() {
             }
         }
     }
-    strncpy(&graphic_map[4][99], "B1", 2);
-    strncpy(&graphic_map[36][3], "B2", 2);
-    strncpy(&graphic_map[4][3], "E1", 2);
-    strncpy(&graphic_map[30][91], "E2", 2);
-    strncpy(&graphic_map[3][38], "WG", 2);
-    strncpy(&graphic_map[11][54], "JS", 2);
-    strncpy(&graphic_map[15][70], "JB", 2);
-    strncpy(&graphic_map[23][54], "SH", 2);
-    strncpy(&graphic_map[19][38], "IL", 2);
-    strncpy(&graphic_map[19][6], "JW", 2);
-    strncpy(&graphic_map[15][102], "SG", 2);
-    strncpy(&graphic_map[31][70], "MS", 2);
 }
 
 //این تابع کاربر را راهنمایی می کند تا مپ شخصی خود را ایجاد کند.
 void creat_personal_map(){
     int i,j, choice=0, character, row, column;
-    COORD C;
+    //COORD C;
     system("cls");
-    printf(" ok, let's creat your own personal map. \nthe map has 9 rows and 13 columns and there are different cells in the map which you can use.\neach cell has an especial number. place these numbers in the table below to define cell types.\n");
-    printf2(12,"%s", " 0: extra cells around the map     3: lit-lamps            5: open-manholes            7: open exits   \n1: empty cells                    4: shut-off lamps       6: covered-manholes         8: closed exits\n2: houses\n")
-    printf2(12, "%s", "   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+    printf(" ok, let's creat your own personal map. \n the map has 9 rows and 13 columns and there are different cells in the map which you can use.\n each cell has an especial number. place these numbers in the table below to define cell types.\n");
+    printf2(9,"%s", " 0: extra cells around the map     3: lit-lamps            5: open-manholes            7: open exits   \n 1: empty cells                    4: shut-off lamps       6: covered-manholes         8: closed exits\n 2: houses\n")
+    printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
     for (i=0; i<9; i++){
         printf2(12, " %d ", i)
         for (j=0; j<13; j++){
@@ -156,19 +159,20 @@ void creat_personal_map(){
     while (choice == 2){
         printf(" which cell do you want to edit?\n row: ");
         scanf("%d", &i );
-        printf("\n column: ");
+        printf(" column: ");
         scanf("%d", &j);
-        C.X=(j+1) * 3; C.Y=i+9;
-        printf("\n enter new value in the table\n");
-        SetConsoleCursorPosition(hConsole,C);
+        //C.X=(j+1) * 3; C.Y=i+8;
+        printf("\n enter new value \n");
+        //SetConsoleCursorPosition(hConsole,C);
         scanf("%d", &logical_map[i][j].type);
+
         printf("\n do you want to finalize your map?\n 1)finalize 2)edit\n");
         scanf("%d", &choice);
     }
-    printf("\n alright, now please enter the position of different characters. \nnote that you can only place the characters in empty cells(manholes and exits are also considered empty).\nthe table below shows available cells to put characters in. 1 means empty and 0 means full.\n");
-    printf2(12, "%s", "   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+    printf("\n alright, now please enter the position of different characters. \n note that you can only place the characters in empty cells(manholes and exits are also considered empty).\n the table below shows available cells to put characters in. 1 means empty and 0 means full.\n");
+    printf2(12, "%s", "   0  1  2  3  4  5  6  7  8  9 10 11 12\n")
     for (i=0; i<9 ;i++){
-        printf2(12, " %d", i);
+        printf2(12, " %d ", i);
         for (j=0; j<13; j++){
             if (logical_map[i][j].type> lamp_off || logical_map[i][j].type==empty){
                 printf("1  ");
@@ -181,9 +185,9 @@ void creat_personal_map(){
     for (character=SH; character<=JB; character++){
         printf("\n %s: row: ", ToString(character));
         scanf("%d", &row);
-        printf("  column: ");
+        printf("     column: ");
         scanf("%d", &column);
-        while (logical_map[row][column].type==extra || logical_map[row][column].type>empty && logical_map[row][column].type<open_well){
+        while (logical_map[row][column].type==extra || (logical_map[row][column].type>empty && logical_map[row][column].type<open_well)){
             printf2(12, "\n %s\n", "you can't place the character in that cell!");
             printf(" enter again! row: ");
             scanf("%d", &row);
@@ -194,13 +198,13 @@ void creat_personal_map(){
             printf2(12, "\n %s\n", "you've already placed a character in that cell")
             printf(" enter again! row: ");
             scanf("%d", &row);
-            printf("  column: ");
+            printf("              column: ");
             scanf("%d", &column);
         }
         logical_map[row][column].character=character;
         printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
         for (i=0; i<9 ;i++){
-            printf2(12, " %d", i);
+            printf2(12, " %d ", i);
             for (j=0; j<13; j++){
                 if(logical_map[i][j].character!=0){
                     printf2(12, "%s ", ToString(logical_map[i][j].character))
@@ -216,6 +220,8 @@ void creat_personal_map(){
         }
     }
     printf2(12, "\n %s\n", "your map is ready, now you can start playing on it.")
+    sleep(5);
+    system("cls");
     int al = 1, il = 1, e = 1, b = 1, m = 1, mc = 1;
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 13; j++) {

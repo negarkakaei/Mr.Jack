@@ -10,7 +10,7 @@ void creat_cell(int i, int j);
 void creat_map();
 void fill_logical_map();
 void fill_graphic_map();
-void creat_personal_map()
+void creat_personal_map();
 void print_map();
 
 #endif
