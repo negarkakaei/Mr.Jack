@@ -164,8 +164,18 @@ void menu(enum condition input, bool exit_option){
     int choice, i;
     int tmp;
     if (input==start){
-        printf2(12, "%s", "\n\n\n                                                    WELCOME!\n")
-        sleep(5);
+        for (i=9; i<=14; i++){
+            printf2(i, "%s", "\n\n\n                                                    WELCOME!\n")
+            sleep(1);
+            system("cls");
+        }
+        for (i=9; i<=11; i++){
+            printf2(i, "%s", "\n\n\n                                                    WELCOME!\n")
+            sleep(1);
+            system("cls");
+        }
+        printf2(9, "%s", "\n\n\n                                                    WELCOME!\n")
+        sleep(1);
         system("cls");
         printf("\n main menu:\n");
         printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n  4)creat personal map\n");

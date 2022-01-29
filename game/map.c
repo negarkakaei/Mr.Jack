@@ -143,11 +143,12 @@ void fill_graphic_map() {
 //این تابع کاربر را راهنمایی می کند تا مپ شخصی خود را ایجاد کند.
 void creat_personal_map(){
     int i,j, choice=0, character, row, column;
-    //COORD C;
+    COORD C;
+    CONSOLE_SCREEN_BUFFER_INFO csbiInfo;
     system("cls");
     printf(" ok, let's creat your own personal map. \n the map has 9 rows and 13 columns and there are different cells in the map which you can use.\n each cell has an especial number. place these numbers in the table below to define cell types.\n");
     printf2(9,"%s", " 0: extra cells around the map     3: lit-lamps            5: open-manholes            7: open exits   \n 1: empty cells                    4: shut-off lamps       6: covered-manholes         8: closed exits\n 2: houses\n")
-    printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+    printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9 10 11 12\n")
     for (i=0; i<9; i++){
         printf2(12, " %d ", i)
         for (j=0; j<13; j++){
@@ -161,11 +162,14 @@ void creat_personal_map(){
         scanf("%d", &i );
         printf(" column: ");
         scanf("%d", &j);
-        //C.X=(j+1) * 3; C.Y=i+8;
+        C.X=(j+1) * 3; C.Y=i+8;
         printf("\n enter new value \n");
-        //SetConsoleCursorPosition(hConsole,C);
+        GetConsoleScreenBufferInfo(hConsole, &csbiInfo);
+        SetConsoleCursorPosition(hConsole,C);
         scanf("%d", &logical_map[i][j].type);
-
+        C.X= csbiInfo.dwCursorPosition.X;
+        C.Y= csbiInfo.dwCursorPosition.Y;
+        SetConsoleCursorPosition(hConsole,C);
         printf("\n do you want to finalize your map?\n 1)finalize 2)edit\n");
         scanf("%d", &choice);
     }
@@ -191,7 +195,7 @@ void creat_personal_map(){
             printf2(12, "\n %s\n", "you can't place the character in that cell!");
             printf(" enter again! row: ");
             scanf("%d", &row);
-            printf("  column: ");
+            printf("              column: ");
             scanf("%d", &column);
         }
         while (logical_map[row][column].character!=0){
@@ -202,7 +206,7 @@ void creat_personal_map(){
             scanf("%d", &column);
         }
         logical_map[row][column].character=character;
-        printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+        printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9 10 11 12\n")
         for (i=0; i<9 ;i++){
             printf2(12, " %d ", i);
             for (j=0; j<13; j++){
@@ -219,7 +223,7 @@ void creat_personal_map(){
             printf("\n");
         }
     }
-    printf2(12, "\n %s\n", "your map is ready, now you can start playing on it.")
+    printf2(10, "\n %s\n", "your map is ready, now you can start playing on it.")
     sleep(5);
     system("cls");
     int al = 1, il = 1, e = 1, b = 1, m = 1, mc = 1;
