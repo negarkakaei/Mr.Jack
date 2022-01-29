@@ -50,7 +50,6 @@ void creat_map() {
 // این تابع مپ منطقی اولیه بازی که شامل اطلاعات هر خانه است را تشکیل می دهد
 void fill_logical_map() {
     FILE *fp = fopen("map_info.txt", "r");
-    int temp;
     int al = 1, il = 1, e = 1, b = 1, m = 1, mc = 1;
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 13; j++) {
@@ -138,6 +137,112 @@ void fill_graphic_map() {
     strncpy(&graphic_map[31][70], "MS", 2);
 }
 
+//این تابع کاربر را راهنمایی می کند تا مپ شخصی خود را ایجاد کند.
+void creat_personal_map(){
+    int i,j, choice=0, character, row, column;
+    COORD C;
+    system("cls");
+    printf(" ok, let's creat your own personal map. \nthe map has 9 rows and 13 columns and there are different cells in the map which you can use.\neach cell has an especial number. place these numbers in the table below to define cell types.\n");
+    printf2(12,"%s", " 0: extra cells around the map     3: lit-lamps            5: open-manholes            7: open exits   \n1: empty cells                    4: shut-off lamps       6: covered-manholes         8: closed exits\n2: houses\n")
+    printf2(12, "%s", "   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+    for (i=0; i<9; i++){
+        printf2(12, " %d ", i)
+        for (j=0; j<13; j++){
+            scanf("%d", &logical_map[i][j].type);
+        }
+    }
+    printf("\n do you want to finalize your map?\n 1)finalize 2)edit\n");
+    scanf("%d", &choice);
+    while (choice == 2){
+        printf(" which cell do you want to edit?\n row: ");
+        scanf("%d", &i );
+        printf("\n column: ");
+        scanf("%d", &j);
+        C.X=(j+1) * 3; C.Y=i+9;
+        printf("\n enter new value in the table\n");
+        SetConsoleCursorPosition(hConsole,C);
+        scanf("%d", &logical_map[i][j].type);
+        printf("\n do you want to finalize your map?\n 1)finalize 2)edit\n");
+        scanf("%d", &choice);
+    }
+    printf("\n alright, now please enter the position of different characters. \nnote that you can only place the characters in empty cells(manholes and exits are also considered empty).\nthe table below shows available cells to put characters in. 1 means empty and 0 means full.\n");
+    printf2(12, "%s", "   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+    for (i=0; i<9 ;i++){
+        printf2(12, " %d", i);
+        for (j=0; j<13; j++){
+            if (logical_map[i][j].type> lamp_off || logical_map[i][j].type==empty){
+                printf("1  ");
+            } else{
+                printf("0  ");
+            }
+        }
+        printf("\n");
+    }
+    for (character=SH; character<=JB; character++){
+        printf("\n %s: row: ", ToString(character));
+        scanf("%d", &row);
+        printf("  column: ");
+        scanf("%d", &column);
+        while (logical_map[row][column].type==extra || logical_map[row][column].type>empty && logical_map[row][column].type<open_well){
+            printf2(12, "\n %s\n", "you can't place the character in that cell!");
+            printf(" enter again! row: ");
+            scanf("%d", &row);
+            printf("  column: ");
+            scanf("%d", &column);
+        }
+        while (logical_map[row][column].character!=0){
+            printf2(12, "\n %s\n", "you've already placed a character in that cell")
+            printf(" enter again! row: ");
+            scanf("%d", &row);
+            printf("  column: ");
+            scanf("%d", &column);
+        }
+        logical_map[row][column].character=character;
+        printf2(12, "%s", "\n   0  1  2  3  4  5  6  7  8  9  10  11  12\n")
+        for (i=0; i<9 ;i++){
+            printf2(12, " %d", i);
+            for (j=0; j<13; j++){
+                if(logical_map[i][j].character!=0){
+                    printf2(12, "%s ", ToString(logical_map[i][j].character))
+                    continue;
+                }
+                if (logical_map[i][j].type> lamp_off || logical_map[i][j].type==empty){
+                    printf("1  ");
+                } else{
+                    printf("0  ");
+                }
+            }
+            printf("\n");
+        }
+    }
+    printf2(12, "\n %s\n", "your map is ready, now you can start playing on it.")
+    int al = 1, il = 1, e = 1, b = 1, m = 1, mc = 1;
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 13; j++) {
+            if (logical_map[i][j].type == lamp_on) {
+                logical_map[i][j].num = al;
+                al++;
+            } else if (logical_map[i][j].type == lamp_off) {
+                logical_map[i][j].num = il;
+                il++;
+            } else if (logical_map[i][j].type == open_well) {
+                logical_map[i][j].num = m;
+                m++;
+            } else if (logical_map[i][j].type == close_well) {
+                logical_map[i][j].num = mc;
+                mc++;
+            }
+            else if (logical_map[i][j].type == exit_on){
+                logical_map[i][j].num = e;
+                e++;
+            } else if (logical_map[i][j].type == exit_off){
+                logical_map[i][j].num = b;
+                b++;
+            }
+        }
+    }
+}
+
 //این تابع ابتدا رنگ هر یک از خانه های مپ گرافیکی را تعیین کرده و سپس ان را پرینت میکند
 void print_map() {
     int i, j, current_j, num;
@@ -196,11 +301,10 @@ void print_map() {
     printf2(2, "%s", "  #  : houses               ###: extra cells around the map\n")
     printf2(12, "%s\n", "  B  : closed exits          E : open exits")
     printf2(15, "%s\n\n", "================================================================")
-    for (i=0; i<39; i++){
-        for (j=0; j<108; j++){
+    for (i=0; i<39; i++) {
+        for (j = 0; j < 108; j++) {
             printf2(color[i][j], "%c", graphic_map[i][j]);
         }
         printf("\n");
     }
-
 }

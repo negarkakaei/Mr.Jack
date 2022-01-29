@@ -167,9 +167,12 @@ void menu(enum condition input, bool exit_option){
         sleep(5);
         system("cls");
         printf("\n main menu:\n");
-        printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n");
+        printf("  1)start a new game\n  2)load the previous game\n  3)game rules\n  4)creat personal map\n");
         scanf("%d", &choice);
         system("cls");
+        if (choice==4){
+            creat_personal_map();
+        }
         while (choice==3) {
             FILE *fp = fopen("rules.txt", "r");
             char str[500];

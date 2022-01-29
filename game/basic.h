@@ -1,13 +1,10 @@
 #ifndef MAIN_C_BASIC_H
 #define MAIN_C_BASIC_H
 
-#ifndef hConsole //GetStdHandle(STD_OUTPUT_HANDLE)
+#ifndef hConsole
 #define hConsole GetStdHandle(STD_OUTPUT_HANDLE)
 
-#ifndef printf2 //(color, format, ...) \
-SetConsoleTextAttribute(hConsole, color); \
-printf(format, __VA_ARGS__); \
-SetConsoleTextAttribute(hConsole, 07);
+#ifndef printf2
 #define printf2(color, format, ...) \
 SetConsoleTextAttribute(hConsole, color); \
 printf(format, __VA_ARGS__); \
