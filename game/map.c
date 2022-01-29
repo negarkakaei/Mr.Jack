@@ -188,6 +188,14 @@ void print_map() {
             }
         }
     }
+    printf2(15, "%s\n%s\n\n", "================================================================"," map guid:")
+    printf2(13, "%s", " (x) : covered manholes     ")
+    printf2(9, "%s\n", "( ): open manholes")
+    printf2(14, "%s", "  ON : lit lamps            ")
+    printf2(11, "%s\n", "OFF: shut-off lamps")
+    printf2(2, "%s", "  #  : houses               ###: extra cells around the map\n")
+    printf2(12, "%s\n", "  B  : closed exits          E : open exits")
+    printf2(15, "%s\n\n", "================================================================")
     for (i=0; i<39; i++){
         for (j=0; j<108; j++){
             printf2(color[i][j], "%c", graphic_map[i][j]);
