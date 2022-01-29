@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libmenu_h.a CMakeFiles/menu_h.dir/library.c.obj
+C:\MinGW\bin\ranlib.exe libmenu_h.a

@@ -1,0 +1,3 @@
+SH: 
+   1)move 1 to 3 cells   
+   2)|AFTER MOVING| draw a card from suspects and read it

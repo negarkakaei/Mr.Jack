@@ -1,0 +1,4 @@
+WG:
+   1)Move 1 to 3 cells
+   2)|Or INSTEAD OF MOVING| change your place with another character
+

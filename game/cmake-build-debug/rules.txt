@@ -1,0 +1,19 @@
+.game rules:
+.In Mr.Jack, one of the two players represents Jack the Ripper, who will be one of the eight characters on the board This player knows which character is Mr.Jack, and his goal is to flee from the district as soon as possible
+.(or avoid being accused for eight turns).
+.The other player represents an independent investigator (not represented on the board) who tries to guess the
+.identity of Jack but he can make only one accusation during the game!
+.During each turn, the players move the characters, using their special powers and placing them either in shadow or light.
+.At the end of each turn, the witnesses declare whether Jack is visible or not.
+.This allows the investigator to know which characters are innocent. As the turns progress, the investigator tries  to eliminate suspects while Jack tries to escape.
+
+There are 5 different type of cells in the map. each shown by a specific sign.
+.note: there are 6 open manholes, 2 covered manholes, 6 lit lamps, 2 shut off lamps, 2 open exits and 2 closed exitsin the map.
+.therefore, each one of the objects above is represented by a number(n) and will be reffered to by that number
+.during the game.
+.houses: #           extra: ###
+.lit lamps: ON n     shut off lamps: OFF n    
+.open manholes: (n)  covered manholes: (xn) 
+.open exits: En      closed exits: Bn 
+
+note: while playing the game please enter the number of your choice only.

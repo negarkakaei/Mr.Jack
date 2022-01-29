@@ -1,0 +1,3 @@
+SG:
+   1)Move 1 to 3 cells
+   2)|BEFORE OR AFTER MOVING| whistle and bring one or several characters closer to yourself by the total of 3        movements. 

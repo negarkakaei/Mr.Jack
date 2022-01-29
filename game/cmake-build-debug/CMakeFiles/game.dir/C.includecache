@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/user/CLionProjects/PROJECT/game/basic.h
+list.h
+C:/Users/user/CLionProjects/PROJECT/game/list.h
+stdio.h
+-
+stdbool.h
+-
+string.h
+-
+stdlib.h
+-
+time.h
+-
+unistd.h
+-
+conio.h
+-
+map.h
+C:/Users/user/CLionProjects/PROJECT/game/map.h
+windows.h
+-
+
+C:/Users/user/CLionProjects/PROJECT/game/list.h
+basic.h
+C:/Users/user/CLionProjects/PROJECT/game/basic.h
+
+C:/Users/user/CLionProjects/PROJECT/game/map.c
+map.h
+C:/Users/user/CLionProjects/PROJECT/game/map.h
+
+C:/Users/user/CLionProjects/PROJECT/game/map.h
+basic.h
+C:/Users/user/CLionProjects/PROJECT/game/basic.h
+
